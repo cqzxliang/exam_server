@@ -14,13 +14,21 @@ export let System = {
   db_type: 'mysql' // 数据库类型
 }
 
+// export let DB = {
+//   host: 'localhost', // 服务器地址
+//   port: 3306, // 数据库端口号
+//   username: 'admin', // 数据库用户名
+//   password: 'admin888', // 数据库密码
+//   database: 'development', // 数据库名称
+//   prefix: 'api_' // 默认"api_"
+// }
 export let DB = {
-  host: 'localhost', // 服务器地址
+  host: 'rm-wz9h8n786i3i8692go.mysql.rds.aliyuncs.com', // 服务器地址
   port: 3306, // 数据库端口号
-  username: 'admin', // 数据库用户名
-  password: 'admin888', // 数据库密码
-  database: 'development', // 数据库名称
-  prefix: 'api_' // 默认"api_"
+  username: 'root', // 数据库用户名
+  password: 'Emmy1234', // 数据库密码
+  database: 'bookLibrary', // 数据库名称
+  // prefix: 'api_' // 默认"api_"
 }
 
 export let SendEmail = {

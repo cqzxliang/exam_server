@@ -5,11 +5,12 @@ import {
   System as SystemConfig
 } from './config'
 import path from 'path'
-import MainRoutes from './routes/main-routes'
+// import MainRoutes from './routes/main-routes'
 import ErrorRoutesCatch from './middleware/ErrorRoutesCatch'
 import ErrorRoutes from './routes/error-routes'
 import jwt from 'koa-jwt'
 import fs from 'fs'
+import router from './routes';
 // import PluginLoader from './lib/PluginLoader'
 
 const app = new Koa2()
@@ -31,7 +32,7 @@ app
   })
   .use(ErrorRoutesCatch())
   .use(KoaStatic('assets', path.resolve(__dirname, '../assets'))) // Static resource
-  .use(jwt({ secret: publicKey }).unless({ path: [/^\/public|\/user\/login|\/assets/] }))
+  // .use(jwt({ secret: publicKey }).unless({ path: [/^\/public|\/user\/login|\/assets/] }))
   .use(KoaBody({
     multipart: true,
     strict: false,
@@ -41,11 +42,15 @@ app
     jsonLimit: '10mb',
     formLimit: '10mb',
     textLimit: '10mb'
-  })) // Processing request
-  // .use(PluginLoader(SystemConfig.System_plugin_path))
-  .use(MainRoutes.routes())
-  .use(MainRoutes.allowedMethods())
-  .use(ErrorRoutes())
+  }));
+// Processing request
+// .use(PluginLoader(SystemConfig.System_plugin_path))
+// .use(MainRoutes.routes())
+// .use(MainRoutes.allowedMethods())
+// .use(ErrorRoutes())
+router(app);
+
+app.use(ErrorRoutes());
 
 if (env === 'development') { // logger
   app.use((ctx, next) => {

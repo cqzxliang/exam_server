@@ -65,39 +65,50 @@ let query = (sql) => {
   });
 };
 
-export let Get = async(ctx) => {
-
-  // let book = await bookLibrary.findOne();
-  // let book = await sequelize.query(`select author,id from moa_lib_books where author='jinzhi.he'`, {
-  //   model: bookLibrary
-  // });
-
-  let book = await query(`select * from moa_lib_books`);
+export let getAllBooks = async(ctx) => {
+  let books = await query(`select * from moa_lib_books`);
   ctx.body = {
-    result: book
-  }
-}
+    result: books
+  };
+};
 
-export let Post = async(ctx) => {
+export let getBookById = async(ctx) => {
+  let id = ctx.params.id;
+  let book = await query(`select * from moa_lib_books where id =${id}`);
   ctx.body = {
-    result: 'post',
-    name: ctx.params.name,
-    para: ctx.request.body
-  }
-}
+    result: book[0]
+  };
+};
 
-export let Put = (ctx) => {
+export let addBook = async(ctx) => {
+  let book = ctx.request.body;
+  let result = await bookLibrary.create(book);
   ctx.body = {
-    result: 'put',
-    name: ctx.params.name,
-    para: ctx.request.body
-  }
-}
+    result: result
+  };
+};
 
-export let Delect = (ctx) => {
+export let updateBook = async(ctx) => {
+  let id = ctx.params.id;
+  let book = ctx.request.body;
+  let result = await bookLibrary.update(book, {
+    where: {
+      id: id
+    }
+  });
   ctx.body = {
-    result: 'delect',
-    name: ctx.params.name,
-    para: ctx.request.body
-  }
-}
+    result: result
+  };
+};
+
+export let deleteBook = async(ctx) => {
+  let id = ctx.params.id;
+  let result = await bookLibrary.destroy({
+    where: {
+      id: id
+    }
+  });
+  ctx.body = {
+    result: result
+  };
+};
