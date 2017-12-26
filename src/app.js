@@ -8,7 +8,7 @@ import path from 'path'
 // import MainRoutes from './routes/main-routes'
 import ErrorRoutesCatch from './middleware/ErrorRoutesCatch'
 import ErrorRoutes from './routes/error-routes'
-import jwt from 'koa-jwt'
+// import jwt from 'koa-jwt'
 import fs from 'fs'
 import router from './routes';
 // import PluginLoader from './lib/PluginLoader'
