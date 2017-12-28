@@ -11,5 +11,6 @@ router
   .post('/', controllers.book.addBook)
   .put('/:id', controllers.book.updateBook)
   .delete('/:id', controllers.book.deleteBook)
+  .get('/douban/:isbn', controllers.book.getBookFromDouBan)
 
 module.exports = router

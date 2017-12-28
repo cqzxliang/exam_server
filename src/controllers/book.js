@@ -1,5 +1,6 @@
 import sequelize from '../lib/sequelize';
 import Sequelize from 'sequelize';
+import request from 'request-promise-native';
 
 const bookLibrary = sequelize.define('moa_lib_books', {
   id: {
@@ -112,3 +113,12 @@ export let deleteBook = async(ctx) => {
     result: result
   };
 };
+
+export let getBookFromDouBan = async(ctx) => {
+  let isbn = ctx.params.isbn;
+  let result = await request.get('https://api.douban.com/v2/book/isbn/' + isbn);
+  // console.log(result);
+  ctx.body = {
+    result: JSON.parse(result)
+  };
+}
