@@ -81,6 +81,14 @@ export let getBookById = async(ctx) => {
   };
 };
 
+export let getBooksByTitltOrISBN = async(ctx) => {
+  let txt = ctx.params.text;
+  let books = await query(`select * from moa_lib_books where (title like '%${txt}%' or isbn13 like '%${txt}%')`);
+  ctx.body = {
+    result: books
+  };
+};
+
 export let addBook = async(ctx) => {
   let book = ctx.request.body;
   let result = await bookLibrary.create(book);
