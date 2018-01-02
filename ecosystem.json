@@ -1,6 +1,6 @@
 {
   "apps": [{
-    "name": "wechat server",
+    "name": "app",
     "script": "dist/app.js",
     "env": {
       "COMMON_VARIABLE": "true"
