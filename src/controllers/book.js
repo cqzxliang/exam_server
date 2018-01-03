@@ -81,9 +81,23 @@ export let getBookById = async(ctx) => {
   };
 };
 
+// 模糊查询
 export let getBooksByTitltOrISBN = async(ctx) => {
   let txt = ctx.params.text;
   let books = await query(`select * from moa_lib_books where (title like '%${txt}%' or isbn13 like '%${txt}%')`);
+  ctx.body = {
+    result: books
+  };
+};
+
+// 分页查询
+export let queryBooksByPage = async(ctx) => {
+  let page = ctx.query.page ? ctx.query.page : 1;
+  let num = ctx.query.num ? ctx.query.num : 1;
+  let startIndex = (page - 1) * num;
+  let filter = ctx.params.text;;
+  let books = await query(`select * from moa_lib_books where id in (select id from moa_lib_books 
+    where (title like '%${filter}%' or isbn13 like '%${filter}%')) limit ${startIndex},${num};`);
   ctx.body = {
     result: books
   };

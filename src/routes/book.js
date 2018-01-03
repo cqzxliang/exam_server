@@ -8,7 +8,7 @@ const router = new KoaRouter({
 router
   .get('/', controllers.book.getAllBooks)
   .get('/:id', controllers.book.getBookById)
-  .get('/query/:text', controllers.book.getBooksByTitltOrISBN)
+  .get('/query/:text', controllers.book.queryBooksByPage)
   .post('/', controllers.book.addBook)
   .put('/:id', controllers.book.updateBook)
   .delete('/:id', controllers.book.deleteBook)
