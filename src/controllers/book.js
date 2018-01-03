@@ -92,9 +92,9 @@ export let getBooksByTitltOrISBN = async(ctx) => {
 
 // 分页查询
 export let queryBooksByPage = async(ctx) => {
-  let page = ctx.query.page ? ctx.query.page : 1;
-  let num = ctx.query.num ? ctx.query.num : 1;
-  let startIndex = (page - 1) * num;
+  let page = (ctx.query.page ? ctx.query.page : 1) >= 0 ? (ctx.query.page ? ctx.query.page : 1) : 1;
+  let num = (ctx.query.num ? ctx.query.num : 1) >= 0 ? (ctx.query.num ? ctx.query.num : 1) : 1;
+  let startIndex = (page - 1) * num >= 0 ? (page - 1) * num : 0;
   let filter = ctx.params.text;;
   let books = await query(`select * from moa_lib_books where id in (select id from moa_lib_books 
     where (title like '%${filter}%' or isbn13 like '%${filter}%')) limit ${startIndex},${num};`);
