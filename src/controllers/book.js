@@ -138,9 +138,17 @@ export let deleteBook = async(ctx) => {
 
 export let getBookFromDouBan = async(ctx) => {
   let isbn = ctx.params.isbn;
-  let result = await request.get('https://api.douban.com/v2/book/isbn/' + isbn);
+  try {
+    let result = await request.get('https://api.douban.com/v2/book/isbn/' + isbn);
+    ctx.body = {
+      result: JSON.parse(result)
+    };
+  } catch (e) {
+    ctx.body = {
+      result: null
+    };
+  }
+
   // console.log(result);
-  ctx.body = {
-    result: JSON.parse(result)
-  };
+
 }
