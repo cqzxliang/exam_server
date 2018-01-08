@@ -8,9 +8,11 @@ const router = new KoaRouter({
 router
   .get('/', controllers.book.getAllBooks)
   .get('/:id', controllers.book.getBookById)
+  .get('/isbn/:isbn', controllers.book.getBookByIsbn)
   .get('/query/:text', controllers.book.queryBooksByPage)
   .post('/', controllers.book.addBook)
-  .put('/:id', controllers.book.updateBook)
+  // .post('/auth', controllers.auth.decryptData)
+  .put('/', controllers.book.updateBook)
   .delete('/:id', controllers.book.deleteBook)
   .get('/douban/:isbn', controllers.book.getBookFromDouBan)
 

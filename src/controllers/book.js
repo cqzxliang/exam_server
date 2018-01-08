@@ -81,6 +81,14 @@ export let getBookById = async(ctx) => {
   };
 };
 
+export let getBookByIsbn = async(ctx) => {
+  let isbn = ctx.params.isbn;
+  let book = await query(`select * from moa_lib_books where isbn13 =${isbn}`);
+  ctx.body = {
+    result: book[0]
+  };
+};
+
 // 模糊查询
 export let getBooksByTitltOrISBN = async(ctx) => {
   let txt = ctx.params.text;
@@ -112,11 +120,10 @@ export let addBook = async(ctx) => {
 };
 
 export let updateBook = async(ctx) => {
-  let id = ctx.params.id;
   let book = ctx.request.body;
   let result = await bookLibrary.update(book, {
     where: {
-      id: id
+      id: book.id
     }
   });
   ctx.body = {
