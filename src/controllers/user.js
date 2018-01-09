@@ -39,6 +39,9 @@ const users = sequelize.define('moa_users', {
   },
   deletedAt: {
     type: Sequelize.DATE,
+  },
+  role: {
+    type: Sequelize.STRING,
   }
 }, {
   freezeTableName: true,

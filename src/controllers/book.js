@@ -67,10 +67,19 @@ let query = (sql) => {
 };
 
 export let getAllBooks = async(ctx) => {
-  let books = await query(`select * from moa_lib_books`);
+  let page = ctx.query.page ? ctx.query.page : 1;
+  let num = ctx.query.num ? ctx.query.num : 10;
+  let startIndex = (page - 1) * num >= 0 ? (page - 1) * num : 0;
+  let filter = ctx.params.text;;
+  let books = await query(`select * from moa_lib_books where id in (select id from moa_lib_books ) limit ${startIndex},${num};`);
   ctx.body = {
     result: books
   };
+
+  // let books = await query(`select * from moa_lib_books`);
+  // ctx.body = {
+  //   result: books
+  // };
 };
 
 export let getBookById = async(ctx) => {
@@ -100,8 +109,10 @@ export let getBooksByTitltOrISBN = async(ctx) => {
 
 // 分页查询
 export let queryBooksByPage = async(ctx) => {
-  let page = (ctx.query.page ? ctx.query.page : 1) >= 0 ? (ctx.query.page ? ctx.query.page : 1) : 1;
-  let num = (ctx.query.num ? ctx.query.num : 1) >= 0 ? (ctx.query.num ? ctx.query.num : 1) : 1;
+  // let page = (ctx.query.page ? ctx.query.page : 1) >= 0 ? (ctx.query.page ? ctx.query.page : 1) : 1;
+  // let num = (ctx.query.num ? ctx.query.num : 1) >= 0 ? (ctx.query.num ? ctx.query.num : 1) : 1;
+  let page = ctx.query.page ? ctx.query.page : 1;
+  let num = ctx.query.num ? ctx.query.num : 10;
   let startIndex = (page - 1) * num >= 0 ? (page - 1) * num : 0;
   let filter = ctx.params.text;;
   let books = await query(`select * from moa_lib_books where id in (select id from moa_lib_books 
