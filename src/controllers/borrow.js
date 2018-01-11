@@ -16,7 +16,7 @@ const borrow = sequelize.define('moa_borrow', {
   borrowDate: {
     type: Sequelize.DATE,
   },
-  shoudPaybackDate: {
+  shouldPaybackDate: {
     type: Sequelize.DATE,
   },
   actualPaybackDate: {
@@ -67,9 +67,10 @@ export let getBorrowByUserId = async(ctx) => {
 
 export let getBorrowByStatus = async(ctx) => {
   let userId = ctx.query.userId;
-  let bookId = ctx.query.bookId;
   let status = ctx.query.status;
-  let result = await query(`select count(id) num from moa_borrow where userId = ${userId} and bookId=${bookId} and borrowStatus ='${status}';`);
+  let result = await query(`select a.id borrowId,a.borrowDate,a.shouldPaybackDate,b.image,b.title,b.author,b.price,b.publisher,b.qty,b.id bookId 
+  from moa_borrow a,moa_lib_books b 
+  where a.bookId = b.id and a.userId = ${userId}  and a.borrowStatus ='${status}' and a.actualPaybackDate is null;`);
   ctx.body = {
     result: result
   };
@@ -77,12 +78,23 @@ export let getBorrowByStatus = async(ctx) => {
 
 export let getBorrowStatus = async(ctx) => {
   let userId = ctx.query.userId;
-  let bookId = ctx.query.bookId;
   let result = await query(`
-    select count(id) num,'W' type from moa_borrow where userId = ${userId} and bookId=${bookId} and borrowStatus ='W'
+    select count(id) num,'W' type from moa_borrow where userId = ${userId}  and borrowStatus ='W' and actualPaybackDate is null
     union
-    select count(id) num ,'A' type  from moa_borrow where userId = ${userId} and bookId=${bookId} and borrowStatus ='A'
+    select count(id) num ,'A' type  from moa_borrow where userId = ${userId}  and borrowStatus ='A' and actualPaybackDate is null
     `);
+  ctx.body = {
+    result: result
+  };
+};
+
+export let updateBorrow = async(ctx) => {
+  let b = ctx.request.body;
+  let result = await borrow.update(b, {
+    where: {
+      id: b.id
+    }
+  });
   ctx.body = {
     result: result
   };
