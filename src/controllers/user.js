@@ -42,7 +42,19 @@ const users = sequelize.define('moa_users', {
   },
   role: {
     type: Sequelize.STRING,
-  }
+  },
+  chinese_name: {
+    type: Sequelize.STRING,
+  },
+  english_name: {
+    type: Sequelize.STRING,
+  },
+  empno: {
+    type: Sequelize.STRING,
+  },
+  password: {
+    type: Sequelize.STRING,
+  },
 }, {
   freezeTableName: true,
   timestamps: true
@@ -62,9 +74,20 @@ export let addUser = async(ctx) => {
   };
 };
 
-export let getUserByOpenId = async(ctx) => {
-  let openid = ctx.params.openid;
-  let user = await query(`select * from moa_users where openId ='${openid}'`);
+export let getUserByUsernameAndPassword = async(ctx) => {
+  let loginInfo = ctx.request.body;
+  let res = await query(`select id,avatarUrl,city,country,gender,language,nickName,openId,province,role,chinese_name,english_name,
+  empno,  createdAt,updatedAt,deletedAt
+   from moa_users where empno='${loginInfo.empno}' and password ='${loginInfo.password}'`);
+  ctx.body = {
+    result: res[0]
+  };
+}
+
+export let getUserById = async(ctx) => {
+  let id = ctx.params.id;
+  let user = await query(`select id,avatarUrl,city,country,gender,language,nickName,openId,province,role,chinese_name,english_name,
+  empno,  createdAt,updatedAt,deletedAt from moa_users where id ='${id}'`);
   ctx.body = {
     result: user[0]
   };

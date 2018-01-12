@@ -6,8 +6,9 @@ const router = new KoaRouter({
 });
 
 router
-  .get('/:openid', controllers.user.getUserByOpenId)
+  .get('/:id', controllers.user.getUserById)
   .post('/', controllers.user.addUser)
   .put('/', controllers.user.updateUser)
+  .post('/login', controllers.user.getUserByUsernameAndPassword)
 
 module.exports = router
