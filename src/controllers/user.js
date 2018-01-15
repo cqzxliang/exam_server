@@ -55,6 +55,9 @@ const users = sequelize.define('moa_users', {
   password: {
     type: Sequelize.STRING,
   },
+  disabled: {
+    type: Sequelize.STRING,
+  }
 }, {
   freezeTableName: true,
   timestamps: true
@@ -78,7 +81,7 @@ export let getUserByUsernameAndPassword = async(ctx) => {
   let loginInfo = ctx.request.body;
   let res = await query(`select id,avatarUrl,city,country,gender,language,nickName,openId,province,role,chinese_name,english_name,
   empno,  createdAt,updatedAt,deletedAt
-   from moa_users where empno='${loginInfo.empno}' and password ='${loginInfo.password}'`);
+   from moa_users where empno='${loginInfo.empno}' and password ='${loginInfo.password}' and IFNULL(disabled,'N') <>'Y' `);
   ctx.body = {
     result: res[0]
   };
@@ -87,7 +90,7 @@ export let getUserByUsernameAndPassword = async(ctx) => {
 export let getUserById = async(ctx) => {
   let id = ctx.params.id;
   let user = await query(`select id,avatarUrl,city,country,gender,language,nickName,openId,province,role,chinese_name,english_name,
-  empno,  createdAt,updatedAt,deletedAt from moa_users where id ='${id}'`);
+  empno,  createdAt,updatedAt,deletedAt from moa_users where id ='${id}' and IFNULL(disabled,'N') <>'Y' `);
   let result;
   if (user && user.length > 0) {
     result = user[0];
@@ -102,7 +105,7 @@ export let getUserById = async(ctx) => {
 export let getUserByOpenId = async(ctx) => {
   let openId = ctx.params.openId;
   let user = await query(`select id,avatarUrl,city,country,gender,language,nickName,openId,province,role,chinese_name,english_name,
-  empno,  createdAt,updatedAt,deletedAt from moa_users where openId ='${openId}'`);
+  empno,  createdAt,updatedAt,deletedAt from moa_users where openId ='${openId}' and IFNULL(disabled,'N') <>'Y' `);
   let result;
   if (user && user.length > 0) {
     result = user[0];
@@ -117,7 +120,7 @@ export let getUserByOpenId = async(ctx) => {
 export let getUserByEmpno = async(ctx) => {
   let empno = ctx.params.empno;
   let user = await query(`select id,avatarUrl,city,country,gender,language,nickName,openId,province,role,chinese_name,english_name,
-  empno,  createdAt,updatedAt,deletedAt from moa_users where empno ='${empno}'`);
+  empno,  createdAt,updatedAt,deletedAt from moa_users where empno ='${empno}' and IFNULL(disabled,'N') <>'Y' `);
   let result;
   if (user && user.length > 0) {
     result = user[0];
