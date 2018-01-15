@@ -88,8 +88,44 @@ export let getUserById = async(ctx) => {
   let id = ctx.params.id;
   let user = await query(`select id,avatarUrl,city,country,gender,language,nickName,openId,province,role,chinese_name,english_name,
   empno,  createdAt,updatedAt,deletedAt from moa_users where id ='${id}'`);
+  let result;
+  if (user && user.length > 0) {
+    result = user[0];
+  } else {
+    result = null;
+  }
   ctx.body = {
-    result: user[0]
+    result: result
+  };
+};
+
+export let getUserByOpenId = async(ctx) => {
+  let openId = ctx.params.openId;
+  let user = await query(`select id,avatarUrl,city,country,gender,language,nickName,openId,province,role,chinese_name,english_name,
+  empno,  createdAt,updatedAt,deletedAt from moa_users where openId ='${openId}'`);
+  let result;
+  if (user && user.length > 0) {
+    result = user[0];
+  } else {
+    result = null;
+  }
+  ctx.body = {
+    result: result
+  };
+};
+
+export let getUserByEmpno = async(ctx) => {
+  let empno = ctx.params.empno;
+  let user = await query(`select id,avatarUrl,city,country,gender,language,nickName,openId,province,role,chinese_name,english_name,
+  empno,  createdAt,updatedAt,deletedAt from moa_users where empno ='${empno}'`);
+  let result;
+  if (user && user.length > 0) {
+    result = user[0];
+  } else {
+    result = null;
+  }
+  ctx.body = {
+    result: result
   };
 };
 

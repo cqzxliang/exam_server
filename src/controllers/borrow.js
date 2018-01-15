@@ -73,11 +73,11 @@ export let getBorrowByStatus = async(ctx) => {
   let type = ctx.query.type || null;
   let result;
   if (type === "payback") {
-    result = await query(`select a.id borrowId,a.borrowDate,a.shouldPaybackDate,a.actualPaybackDate,b.image,b.title,b.author,b.price,b.publisher,b.qty,b.id bookId 
+    result = await query(`select a.id borrowId,a.borrowDate,a.shouldPaybackDate,a.actualPaybackDate,b.image,b.title,b.author,b.price,b.publisher,b.qty,b.id bookId ,b.num
     from moa_borrow a,moa_lib_books b 
     where a.bookId = b.id and a.userId = ${userId}  and a.borrowStatus ='${status}' and a.actualPaybackDate is not null;`);
   } else {
-    result = await query(`select a.id borrowId,a.borrowDate,a.shouldPaybackDate,a.actualPaybackDate,b.image,b.title,b.author,b.price,b.publisher,b.qty,b.id bookId 
+    result = await query(`select a.id borrowId,a.borrowDate,a.shouldPaybackDate,a.actualPaybackDate,b.image,b.title,b.author,b.price,b.publisher,b.qty,b.id bookId ,b.num
     from moa_borrow a,moa_lib_books b 
     where a.bookId = b.id and a.userId = ${userId}  and a.borrowStatus ='${status}' and a.actualPaybackDate is null;`);
   }

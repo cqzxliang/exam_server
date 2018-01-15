@@ -54,10 +54,16 @@ const bookLibrary = sequelize.define('moa_lib_books', {
   },
   qty: {
     type: Sequelize.INTEGER,
+  },
+  num: {
+    type: Sequelize.STRING,
+  },
+  category: {
+    type: Sequelize.STRING,
   }
 }, {
   freezeTableName: true,
-  timestamps: false
+  timestamps: true
 })
 
 let query = (sql) => {
