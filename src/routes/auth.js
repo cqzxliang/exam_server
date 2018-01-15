@@ -6,7 +6,7 @@ const router = new KoaRouter({
 });
 
 router
-
+  .get('/:code', controllers.auth.getOpenId)
   .post('/', controllers.auth.decryptData)
 
 module.exports = router

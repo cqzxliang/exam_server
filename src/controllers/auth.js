@@ -1,4 +1,8 @@
 var WXBizDataCrypt = require('../tool/WXBizDataCrypt')
+import {
+  Wechat as config
+} from '../config';
+import request from 'request-promise-native';
 
 export let decryptData = async(ctx) => {
   let content = ctx.request.body;
@@ -11,6 +15,17 @@ export let decryptData = async(ctx) => {
   let data = pc.decryptData(encryptedData, iv);
   ctx.body = {
     result: data
+  };
+};
+
+export let getOpenId = async(ctx) => {
+  let code = ctx.params.code;
+  console.log(code)
+  let appId = config.appId;
+  let appSecret = config.appSecret;
+  let result = await request.get(`https://api.weixin.qq.com/sns/jscode2session?appid=${appId}&secret=${appSecret}&js_code=${code}&grant_type=authorization_code`);
+  ctx.body = {
+    result: result
   };
 };
 

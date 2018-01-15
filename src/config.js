@@ -1,5 +1,10 @@
 import path from 'path'
 
+export let Wechat = {
+  appId: 'wx78b25a3605bf5b17',
+  appSecret: 'ac95cb2c178e4393fab570428164479a'
+}
+
 // 系统配置
 export let System = {
   API_server_type: 'http://', // API服务器协议类型,包含"http://"或"https://"
