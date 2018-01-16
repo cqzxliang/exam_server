@@ -112,3 +112,22 @@ export let updateBorrow = async(ctx) => {
     result: result
   };
 };
+
+// 热书排行
+export let getHotRank = async(ctx) => {
+  let result = await query(`select count(a.id) num ,a.bookId,b.title   from moa_borrow a , moa_lib_books  b  where a.borrowStatus ='A'
+  and a.bookId =b.id GROUP BY a.bookId,b.title  order by count(a.id) desc LIMIT 10`);
+  ctx.body = {
+    result: result
+  };
+};
+
+// 借书排行
+export let getBorrowRank = async(ctx) => {
+  let result = await query(`select count(a.userId  ) num,b.nickName,b.empno,b.avatarUrl  from moa_borrow a , moa_users   b 
+  where a.borrowStatus =A and a.userId =b.id and IFNULL(b.disabled,'N') <>'Y'
+  GROUP BY a.userId,b.nickName,b.empno,b.avatarUrl  order by count(a.userId) desc LIMIT 10`);
+  ctx.body = {
+    result: result
+  };
+};
