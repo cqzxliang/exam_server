@@ -1,6 +1,6 @@
 {
   "apps": [{
-    "name": "app",
+    "name": "exam",
     "script": "dist/app.js",
     "env": {
       "COMMON_VARIABLE": "true"
@@ -15,8 +15,8 @@
       "host": "120.78.64.203",
       "port": "22",
       "ref": "origin/master",
-      "repo": "git@gitee.com:Authur/bookLibraryServer.git",
-      "path": "/home/imooc/data/www/wechatServer",
+      "repo": "git@github.com:hejinzhi/exam_server.git",
+      "path": "/home/imooc/data/www/examServer",
       "ssh_options": "StrictHostKeyChecking=no",
       "post-deploy": "npm install && babel src -d dist && pm2 startOrRestart ecosystem.json --env production",
       "env": {
