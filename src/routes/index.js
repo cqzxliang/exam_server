@@ -1,16 +1,12 @@
-import book_route from './book';
-import auth_route from './auth';
-import user_route from './user';
-import settings_route from './settings';
-import borrow_route from './borrow';
+import exam_route from './exam';
+import question_route from './question';
+import answer_route from './answer';
 
 function route(app) {
   const addRoute = (route, app) => app.use(route.routes()).use(route.allowedMethods());
-  addRoute(book_route, app);
-  addRoute(auth_route, app);
-  addRoute(user_route, app);
-  addRoute(settings_route, app);
-  addRoute(borrow_route, app);
+  addRoute(exam_route, app);
+  addRoute(question_route, app);
+  addRoute(answer_route, app);
 }
 
 module.exports = route;

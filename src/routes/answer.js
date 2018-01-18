@@ -2,11 +2,11 @@ import KoaRouter from 'koa-router';
 import controllers from '../controllers/';
 
 const router = new KoaRouter({
-  prefix: '/api/settings'
+  prefix: '/api/answer'
 });
 
 router
-  .get('/', controllers.settings.getSettings)
-  .post('/', controllers.settings.updateSettings)
+  .get('/seq/:userId', controllers.answer.getSeq)
+  .post('/', controllers.answer.addAnswer)
 
 module.exports = router
