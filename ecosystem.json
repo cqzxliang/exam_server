@@ -15,7 +15,7 @@
       "host": "120.78.64.203",
       "port": "22",
       "ref": "origin/master",
-      "repo": "git@github.com:hejinzhi/exam_server.git",
+      "repo": "https://github.com/hejinzhi/exam_server.git",
       "path": "/home/imooc/data/www/examServer",
       "ssh_options": "StrictHostKeyChecking=no",
       "post-deploy": "npm install && babel src -d dist && pm2 startOrRestart ecosystem.json --env production",
